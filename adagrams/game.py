@@ -35,7 +35,7 @@ def draw_letters():
         pool.extend([letter] * quantity)
 
     letters = []
-    
+
     while len(letters) < 10:
         current_index = randint(0, len(pool) - 1)
         letter = pool.pop(current_index)
@@ -43,8 +43,33 @@ def draw_letters():
 
     return letters    
 
+def list_to_dict(letters):
+    letter_dict = {}
+
+    for letter in letters:
+        upper_letter = letter.upper()
+        if upper_letter not in letter_dict:
+            letter_dict[upper_letter] = 1
+        else:
+            letter_dict[upper_letter] += 1
+
+    return letter_dict
+
+
+
 def uses_available_letters(word, letter_bank):
-    pass
+    if len(word) > len(letter_bank):
+        return False
+    
+    letter_dict = list_to_dict(letter_bank)
+    word_dict = list_to_dict(word)
+    
+    for letter, quantity in word_dict.items():
+        if (letter not in letter_dict) or (quantity > letter_dict[letter]):
+            return False
+
+    return True
+
 
 def score_word(word):
     pass
